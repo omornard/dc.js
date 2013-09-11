@@ -170,6 +170,8 @@ dc.rowChart = function (parent, chartGroup) {
                 var start = _x(0) == -Infinity ? _x(1) : _x(0);
                 return Math.abs(start - _x(_chart.valueAccessor()(d)));
             })
+
+        createTitles(rows);
     }
 
     function createTitles(rows) {
