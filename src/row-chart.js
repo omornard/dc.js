@@ -72,11 +72,12 @@ dc.rowChart = function (parent, chartGroup) {
     }
 
     _chart.doRender = function () {
+
+        _chart.resetSvg();
+
         assembleData();
         _xScale = d3.scale.linear().domain([0, d3.max(_rowData, _chart.valueAccessor())]).range([0, _chart.effectiveWidth()]);
  
-        _chart.resetSvg();
-
         _g = _chart.svg()
             .append("g")
             .attr("transform", "translate(" + _chart.margins().left + "," + _chart.margins().top + ")");
@@ -87,6 +88,7 @@ dc.rowChart = function (parent, chartGroup) {
                         .attr("transform", "translate(0, " + _chart.effectiveHeight() + ")")
                         .call(_xAxis);
 
+        drawAxis();
         drawGridLines();
         drawChart();
 
@@ -124,6 +126,9 @@ dc.rowChart = function (parent, chartGroup) {
     }
 
     function drawChart() {
+        drawAxis();
+        drawGridLines();
+
         var rows = _g.selectAll("g." + _rowCssClass)
                      .data(_rowData);
 
