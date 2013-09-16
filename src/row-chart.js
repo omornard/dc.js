@@ -76,20 +76,15 @@ dc.rowChart = function (parent, chartGroup) {
         _chart.resetSvg();
 
         assembleData();
-        _xScale = d3.scale.linear().domain([0, d3.max(_rowData, _chart.valueAccessor())]).range([0, _chart.effectiveWidth()]);
  
         _g = _chart.svg()
             .append("g")
             .attr("transform", "translate(" + _chart.margins().left + "," + _chart.margins().top + ")");
 
-        _xAxis.scale(_xScale);
-
         _g.append("g").attr("class", "axis")
                         .attr("transform", "translate(0, " + _chart.effectiveHeight() + ")")
                         .call(_xAxis);
 
-        drawAxis();
-        drawGridLines();
         drawChart();
 
         return _chart;
@@ -126,6 +121,9 @@ dc.rowChart = function (parent, chartGroup) {
     }
 
     function drawChart() {
+        _xScale = d3.scale.linear().domain([0, d3.max(_rowData, _chart.valueAccessor())]).range([0, _chart.effectiveWidth()]);
+        _xAxis.scale(_xScale);
+
         drawAxis();
         drawGridLines();
 
