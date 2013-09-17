@@ -21,6 +21,8 @@ dc.rowChart = function (parent, chartGroup) {
     var _xAxis = d3.svg.axis().orient("bottom");
 
     var _rowsCap = Infinity;
+    
+    var _rowOther = true;
 
     var _othersLabel = "Others";
 
@@ -35,10 +37,12 @@ dc.rowChart = function (parent, chartGroup) {
             _rowData = _chart.computeOrderedGroups(); // ordered by keys
         } else {
             var topRows = _chart.group().top(_rowsCap); // ordered by value
-            var topRowsSum = d3.sum(topRows, _chart.valueAccessor());
-            var allRows = _chart.group().all();
-            var allRowsSum = d3.sum(allRows, _chart.valueAccessor());
-            _othersHandler(topRows,allRowsSum - topRowsSum);
+            if (_rowOther) {
+                var topRowsSum = d3.sum(topRows, _chart.valueAccessor());
+                var allRows = _chart.group().all();
+                var allRowsSum = d3.sum(allRows, _chart.valueAccessor());
+                _othersHandler(topRows,allRowsSum - topRowsSum);
+ 			}
             _rowData = topRows;
         }
     }
@@ -265,6 +269,12 @@ dc.rowChart = function (parent, chartGroup) {
         _rowsCap = _;
         return _chart;
     };
+    
+    _chart.rowOther = function (_) {
+    	if (!arguments.length) return _rowOther;
+    	_rowOther = _;
+    	return _chart;
+    }
 
     _chart.othersLabel = function (_) {
         if (!arguments.length) return _othersLabel;
