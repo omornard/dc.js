@@ -153,6 +153,7 @@ dc.rowChart = function (parent, chartGroup) {
     }
 
     function updateElements(rows) {
+    	var height = rowHeight();
         var n = _rowData.length;
 
         var rect = rows.attr("transform",function (d, i) {
